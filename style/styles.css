@@ -80,5 +80,6 @@ body{
     background-color: aliceblue;
     color: black;
     height: 100px;
+    overflow: hidden;
     width: 100%;
 }
