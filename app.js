@@ -3,27 +3,30 @@
 let string= 0;
 const showOperation = document.getElementById('showOperation');
 
+turnOnOff();
 getInput();
+equalOperation();
+
 
 
 function add (a, b) {
     console.log(`In add a = ${a} y b= ${b}`);
-    return a + b;
+    return `ANS = ${a + b}`;
 }
 
 function subtract (a , b) {
     console.log(`In sub a = ${a} y b= ${b}`);
-    return a - b;
+    return `ANS = ${a - b}`;
 }
 
 function multiply (a, b) {
     console.log(`In mul a = ${a} y b= ${b}`);
-    return a * b;
+    return `ANS = ${a * b}`;
 }
 
 function divide(a, b) {
     console.log(`In div a = ${a} y b= ${b}`);
-    return a / b
+    return `ANS = ${a / b}`;
 }
 
 
@@ -72,19 +75,30 @@ function splitValues(){
         if ((string[i].codePointAt(0) < 48 || string[i].codePointAt(0) > 57) && string[i].codePointAt(0) !== 46) {
             operations = string[i];
         }
+        // If user only provided one number operations = +
+        if (operations === '') {
+            operations = '+';
+        }
     }
 
-    let [a , b] = string.split(operations);
+    // If user only provided one number b = +
+    let [a , b = 0] = string.split(operations);
     string = '';
     return [Number(a), Number(b), operations];
 }
 
 function turnOnOff(){
     const ON = document.getElementById('ON');
+    let flag = 0;
 
     ON.addEventListener('click', (event) => {
-        showOperation.textContent = string;
-        //getInput(showOperation);    
+        if (flag === 0) {
+            showOperation.textContent = string; 
+            flag = 1; 
+        } else {
+            showOperation.textContent = ''; 
+            flag = 0; 
+        }
     })
 }
 
