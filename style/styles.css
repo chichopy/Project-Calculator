@@ -21,16 +21,27 @@ body{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 650px;
+    height: 750px;
     justify-content: space-evenly;
     margin-top: 20px;
     width: 500px;
 }
 
 .display{
+    display: flex;
+    flex-direction: column;
     background-color: darkolivegreen;
     max-height: 150px;
     width: 80%;
+}
+
+.headerDisplay{
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    background-color:blue;
+    height: 50px;
+    width: 100%;  
 }
 
 .row{
@@ -58,5 +69,16 @@ body{
     display: flex;
     height: 150px;
     justify-content: center;
+    width: 100%;
+}
+
+
+.showOperation{
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    background-color: aliceblue;
+    color: black;
+    height: 100px;
     width: 100%;
 }
