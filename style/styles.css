@@ -4,10 +4,12 @@
 }
 
 body{
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    flex-direction: column;
     font-size: 20px;
+    gap: 20px;
+    justify-content: center;
 }
 
 .bodyCal{
@@ -18,19 +20,19 @@ body{
 
 .container{
     background-color: dimgray;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: 750px;
     justify-content: space-evenly;
-    margin-top: 20px;
     width: 500px;
 }
 
 .display{
+    background-color: #b2b9b7;
     display: flex;
     flex-direction: column;
-    background-color: darkolivegreen;
     max-height: 150px;
     width: 80%;
 }
@@ -39,7 +41,6 @@ body{
     align-items: center;
     display: flex;
     justify-content: flex-end;
-    background-color:blue;
     height: 25px;
     width: 100%;  
 }
@@ -51,12 +52,15 @@ body{
 }
 
 .number, .operator{
-    height: 80px;
-    width: 80px;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    display: flex;
+    font-size: 20px;
+    height: 80px;
+    justify-content: center;
+    width: 80px;
 }
+
 .number{
     background-color: azure;
 }
@@ -72,15 +76,25 @@ body{
     width: 100%;
 }
 
-
 .showOperation{
     align-items: flex-end;
+    color: black;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: aliceblue;
-    color: black;
+    font-size: 30px;
     height: 125px;
+    justify-content: center;
     overflow: hidden;
     width: 100%;
+}
+
+footer a{
+    text-decoration: none;
+    color: black;
+    white-space: pre;
+}
+    
+footer a:hover{
+    cursor: pointer;
+    color: blue;
 }

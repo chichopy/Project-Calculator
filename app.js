@@ -27,7 +27,9 @@ function turnOnOff() {
             string = '';
             showOperation.textContent = '';
             previousAnswer = '';
-            headerAns.removeChild(headerAns.firstChild);
+            if (headerAns.hasChildNodes()){
+                headerAns.removeChild(headerAns.firstChild);
+            }
             on = false; 
         }
     })
@@ -123,17 +125,18 @@ function splitValues() {
 function operate(a, b, operations, numberOfOperations) {
     // Simple validation so as to check number of operants
     if (numberOfOperations === 1) {
+        let result = 0;
         if(operations === '+'){
-            let result = add(a,b);
-            headerAns.textContent = result;
-            showOperation.textContent = result;
+            result = add(a,b);
         } else if(operations === '-') {
-            showOperation.textContent = subtract(a,b);
+            result = subtract(a,b);
         } else if(operations === '*') {
-            showOperation.textContent =multiply(a,b);
+            result =multiply(a,b);
         } else {
-            showOperation.textContent =divide(a,b);
+            result =divide(a,b);
         }
+        headerAns.textContent = result;
+        showOperation.textContent = result;
         string = '';
         numberOfOperations = 0;
     } else if (numberOfOperations > 1) {
@@ -202,7 +205,7 @@ function operate(a, b, operations, numberOfOperations) {
 function ans() {
     const ansButton = document.getElementById('ans');
     ansButton.addEventListener('click', () => {
-        string = previousAnswer;
+        string += previousAnswer;
         showOperation.style['align-items'] = 'flex-end';
         showOperation.textContent = string;
     })
