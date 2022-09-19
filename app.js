@@ -1,6 +1,6 @@
 "use strict";
 let string= '';
-let previousAnswer = '';
+let previousAnswer = 0;
 let on = false;
 const showOperation = document.getElementById('showOperation');
 const headerAns = document.getElementById('headerAns');
@@ -22,11 +22,12 @@ function turnOnOff() {
         showOperation.style['align-items'] = 'flex-end';
         if (on === false) {
             showOperation.textContent = 0; 
+            headerAns.textContent = 'ANS = 0';
             on = true; 
         } else {
             string = '';
             showOperation.textContent = '';
-            previousAnswer = '';
+            //previousAnswer = '';
             if (headerAns.hasChildNodes()){
                 headerAns.removeChild(headerAns.firstChild);
             }
