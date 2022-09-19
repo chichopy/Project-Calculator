@@ -1,8 +1,9 @@
 "use strict";
 let string= '';
-let previousAnswer = '0';
+let previousAnswer = '';
 let on = false;
 const showOperation = document.getElementById('showOperation');
+const headerAns = document.getElementById('headerAns');
 
 turnOnOff();
 getInput();
@@ -25,6 +26,8 @@ function turnOnOff() {
         } else {
             string = '';
             showOperation.textContent = '';
+            previousAnswer = '';
+            headerAns.removeChild(headerAns.firstChild);
             on = false; 
         }
     })
@@ -51,6 +54,16 @@ function equalOperation() {
         if (on) {
             let [a, b, operations, numberOfOperations] = splitValues();
             showOperation.style['align-items'] = 'flex-end';
+            // If there are multiple periods in a or b Syntax Error
+            if (a === 'SYNTAX ERROR') {
+                showOperation.style['align-items'] = 'baseline';
+                let p = document.createElement('p');
+                p.textContent = 'SYNTAX ERROR'
+                showOperation.removeChild(showOperation.firstChild);
+                showOperation.appendChild(p);
+                string = '';
+                numberOfOperations = 0;
+            }
             operate(a, b, operations, numberOfOperations);
         }
     })
@@ -76,7 +89,33 @@ function splitValues() {
 
         let [a = 0 , b = 0] = string.split(operations);
         string = '';
-        return [Number(a), Number(b), operations, numberOfOperations]; 
+        // validate there is only one period in either a, b and if there is a period, there must be a number too
+        let periodA = 0;
+        let numbersInA = 0;
+        let periodB = 0;
+        let numbersInB = 0;
+        for (let i in a) {
+            if ( a[i] === '.'){
+                periodA += 1;
+            } else {
+                numbersInA += 1;
+            }
+        }
+        for (let i in b) {
+            if ( b[i] === '.'){
+                periodB += 1;
+            } else {
+                numbersInB += 1;
+            }
+        }
+        // Checks valid combinations: 123 + 456; 123.0 + 456; 123 + 456.0; 123.0 + 456.0
+        if ((periodA < 1 && periodB < 1) || (periodA === 1 && numbersInA >= 1  && periodB < 1) || 
+            (periodB === 1 && numbersInB >= 1  && periodA < 1) || (periodA === 1 && numbersInA >= 1 
+            && periodB === 1 && numbersInB >= 1) ) {
+            return [Number(a), Number(b), operations, numberOfOperations]; 
+        } else {
+            return ['SYNTAX ERROR', '', '', ''];
+        }
     }
 }
 
@@ -85,7 +124,9 @@ function operate(a, b, operations, numberOfOperations) {
     // Simple validation so as to check number of operants
     if (numberOfOperations === 1) {
         if(operations === '+'){
-            showOperation.textContent = add(a,b);
+            let result = add(a,b);
+            headerAns.textContent = result;
+            showOperation.textContent = result;
         } else if(operations === '-') {
             showOperation.textContent = subtract(a,b);
         } else if(operations === '*') {
@@ -119,7 +160,7 @@ function operate(a, b, operations, numberOfOperations) {
             previousAnswer = (a + b).toString();
             return `ANS = ${previousAnswer}`;
         } else {
-            previousAnswer = (((a * 10) + (b * 10)) / 10).toFixed(3);
+            previousAnswer = (((a * 10) + (b * 10)) / 10);
             return `ANS = ${previousAnswer}`;
         }
     }
@@ -129,7 +170,7 @@ function operate(a, b, operations, numberOfOperations) {
             previousAnswer = (a - b).toString();
             return `ANS = ${previousAnswer}`;
         } else {
-            previousAnswer = (((a * 10) - (b * 10)) / 10).toFixed(3);
+            previousAnswer = (((a * 10) - (b * 10)) / 10);
             return `ANS = ${previousAnswer}`;
         }
     }
@@ -139,19 +180,19 @@ function operate(a, b, operations, numberOfOperations) {
             previousAnswer = (a * b).toString();
             return `ANS = ${previousAnswer}`;
         } else {
-            previousAnswer = (((a * 10) * (b * 10)) / 10).toFixed(3);
+            previousAnswer = (((a * 10) * (b * 10)) / 10);
             return `ANS = ${previousAnswer}`;
         }
     }
     
     function divide(a, b) {
         if (parseFloat(a) === parseInt(a) && parseFloat(b) === parseInt(b) && b !== 0){
-            previousAnswer = (a / b).toFixed(3).toString();
+            previousAnswer = (a / b).toString();
             return `ANS = ${previousAnswer}`;
         } if (b ===0){
             return `SYNTAX ERROR`;
         } else {
-            previousAnswer = (((a * 10) / (b * 10)) / 10).toFixed(3);
+            previousAnswer = (((a * 10) / (b * 10)) / 10);
             return `ANS = ${previousAnswer}`;
         }
     }
@@ -185,6 +226,10 @@ function deleteNumber() {
             string = string.slice(0, string.length-1);
         }
         showOperation.style['align-items'] = 'flex-end';
-        showOperation.textContent = string;
+        if (string === '') {
+            showOperation.textContent = 0;
+        } else {
+            showOperation.textContent = string;
+        }
     })
 }
