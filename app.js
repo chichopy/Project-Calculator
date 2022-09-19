@@ -1,7 +1,6 @@
 "use strict";
-let string= 0;
+let string= '';
 let previousAnswer = '0';
-let numberOfOperations = 0;
 let on = false;
 const showOperation = document.getElementById('showOperation');
 
@@ -16,8 +15,9 @@ deleteNumber();
 
 function turnOnOff() {
     const onButton = document.getElementById('onButton');
-    showOperation.style['align-items'] = 'flex-end';
     onButton.addEventListener('click', () => {
+        // The style below modifies action from the first line of else if, function operate.
+        // Line repeats in multiple functions for same reason.
         showOperation.style['align-items'] = 'flex-end';
         if (on === false) {
             showOperation.textContent = 0; 
@@ -36,9 +36,6 @@ function getInput () {
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             if (on) {
-                if (string === 0){
-                    string = '';
-                }
                 string += button.innerHTML;
                 showOperation.style['align-items'] = 'flex-end';
                 showOperation.textContent = string; 
@@ -52,9 +49,9 @@ function equalOperation() {
     const equal = document.getElementById('equal');
     equal.addEventListener('click', () =>{
         if (on) {
-            let [a, b, operations] = splitValues();
+            let [a, b, operations, numberOfOperations] = splitValues();
             showOperation.style['align-items'] = 'flex-end';
-            operate(a, b, operations);
+            operate(a, b, operations, numberOfOperations);
         }
     })
 }
@@ -62,31 +59,31 @@ function equalOperation() {
 
 function splitValues() {
     if (on) {
-        let operations ='';
+        // numberOfOperations allow calculator to operate only one operation at a time
+        let numberOfOperations = 0;
+        let operations = '';
         for ( let i = 0; i < string.length; i++) {
             if ((string[i].codePointAt(0) < 48 || string[i].codePointAt(0) > 57) && string[i].codePointAt(0) !== 46) {
                 operations = string[i];
                 numberOfOperations += 1;
             }
         }
-        // If user only provided one number operations = +
+        // If user only provided one number operations = +, so line 77 works
         if (operations === '') {
             operations = '+';
             numberOfOperations = 1;
         }
-        if (string === 0){
-            string = '';
-        }
 
         let [a = 0 , b = 0] = string.split(operations);
         string = '';
-        return [Number(a), Number(b), operations]; 
+        return [Number(a), Number(b), operations, numberOfOperations]; 
     }
 }
 
 
-function operate(a, b, operations) {
-    if (numberOfOperations === 1){
+function operate(a, b, operations, numberOfOperations) {
+    // Simple validation so as to check number of operants
+    if (numberOfOperations === 1) {
         if(operations === '+'){
             showOperation.textContent = add(a,b);
         } else if(operations === '-') {
@@ -96,7 +93,7 @@ function operate(a, b, operations) {
         } else {
             showOperation.textContent =divide(a,b);
         }
-        string = 0;
+        string = '';
         numberOfOperations = 0;
     } else if (numberOfOperations > 1) {
         showOperation.style['align-items'] = 'baseline';
@@ -113,7 +110,7 @@ function operate(a, b, operations) {
         showOperation.appendChild(p0);
         showOperation.appendChild(p1);
         showOperation.appendChild(p2);
-        string = 0;
+        string = '';
         numberOfOperations = 0;
     }
 
@@ -174,9 +171,9 @@ function ans() {
 function clear() {
     const clear = document.getElementById('clear');
     clear.addEventListener('click', () => {
-        string = 0;
+        string = '';
+        showOperation.textContent = 0;
         showOperation.style['align-items'] = 'flex-end';
-        showOperation.textContent = string;
     })
 }
 
