@@ -206,9 +206,11 @@ function operate(a, b, operations, numberOfOperations) {
 function ans() {
     const ansButton = document.getElementById('ans');
     ansButton.addEventListener('click', () => {
-        string += previousAnswer;
-        showOperation.style['align-items'] = 'flex-end';
-        showOperation.textContent = string;
+        if (on) {
+            string += previousAnswer;
+            showOperation.style['align-items'] = 'flex-end';
+            showOperation.textContent = string;
+        }
     })
 }
 
@@ -216,9 +218,11 @@ function ans() {
 function clear() {
     const clear = document.getElementById('clear');
     clear.addEventListener('click', () => {
-        string = '';
-        showOperation.textContent = 0;
-        showOperation.style['align-items'] = 'flex-end';
+        if (on) {
+            string = '';
+            showOperation.textContent = 0;
+            showOperation.style['align-items'] = 'flex-end';
+        }
     })
 }
 
@@ -226,14 +230,16 @@ function clear() {
 function deleteNumber() {
     const deleteButton = document.getElementById('delete');
     deleteButton.addEventListener('click', () => {
-        if (string.length != 0 && string !== 0){
-            string = string.slice(0, string.length-1);
-        }
-        showOperation.style['align-items'] = 'flex-end';
-        if (string === '') {
-            showOperation.textContent = 0;
-        } else {
-            showOperation.textContent = string;
+        if (on) {
+            if (string.length != 0 && string !== 0){
+                string = string.slice(0, string.length-1);
+            }
+            showOperation.style['align-items'] = 'flex-end';
+            if (string === '') {
+                showOperation.textContent = 0;
+            } else {
+                showOperation.textContent = string;
+            }
         }
     })
 }
