@@ -18,10 +18,6 @@ body{
     gap: 20px;
 }
 
-.small {
-    font-size: 13px; 
-}
-
 .container{
     background-color: dimgray;
     border-radius: 20px;
@@ -39,6 +35,17 @@ body{
     max-height: 100px;
     width: 260px;
     border-radius: 5px;
+}
+
+footer a{
+    text-decoration: none;
+    color: black;
+    white-space: pre;
+}
+    
+footer a:hover{
+    cursor: pointer;
+    color: blue;
 }
 
 .headerDisplay{
@@ -95,13 +102,6 @@ body{
     width: 100%;
 }
 
-footer a{
-    text-decoration: none;
-    color: black;
-    white-space: pre;
-}
-    
-footer a:hover{
-    cursor: pointer;
-    color: blue;
+.small {
+    font-size: 13px; 
 }
